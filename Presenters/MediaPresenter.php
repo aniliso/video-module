@@ -22,4 +22,20 @@ class MediaPresenter extends BasePresenter
         ]);
         return $embed->getThumb();
     }
+
+    public function firstImage($width, $height, $mode, $quality, $watermark = '')
+    {
+        $image = parent::firstImage($width, $height, $mode, $quality, $watermark);
+
+        if(!$image) {
+            return $this->embedImage($width, $height, $mode, $quality);
+        }
+
+        return $image;
+    }
+
+    public function code()
+    {
+        return $this->entity->embed['code'] ?? null;
+    }
 }

@@ -4,12 +4,12 @@ use Illuminate\Routing\Router;
 /** @var Router $router */
 
 $router->group([], function (Router $router) {
-    $router->get('video/{slug}', [
+    $router->get(LaravelLocalization::transRoute('video::routes.media.show'), [
        'uses' => 'PublicController@show',
-       'as'   => 'media.show'
+       'as'   => 'video.media.show'
     ]);
-    $router->get('video', [
+    $router->get(LaravelLocalization::transRoute('video::routes.media.index'), [
         'uses' => 'PublicController@index',
-        'as'   => 'media.index'
+        'as'   => 'video.media.index'
     ]);
 });

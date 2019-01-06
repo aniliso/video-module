@@ -29,6 +29,6 @@ class Media extends Model
 
     public function getUrlAttribute()
     {
-        return route('media.show', $this->slug);
+        return route('video.media.show', $this->slug);
     }
 }

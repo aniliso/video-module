@@ -26,6 +26,7 @@ class VideoServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerBindings();
+        $this->registerWidgets();
 
         $this->app->extend('asgard.ModulesList', function($app) {
             array_push($app, 'video');
@@ -86,5 +87,10 @@ class VideoServiceProvider extends ServiceProvider
 // add bindings
 
 
+    }
+
+    public function registerWidgets()
+    {
+        \Widget::register('videoLatest', '\Modules\Video\Widgets\VideoWidgets@latest');
     }
 }

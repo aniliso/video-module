@@ -11,6 +11,10 @@ use Modules\Video\Services\EmbedService;
 
 class EloquentMediaRepository extends EloquentBaseRepository implements MediaRepository
 {
+    /**
+     * @param $data
+     * @return \Illuminate\Database\Eloquent\Model|EloquentBaseRepository
+     */
     public function create($data)
     {
         $model = $this->model->create($data);
@@ -23,6 +27,11 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         return $model;
     }
 
+    /**
+     * @param $model
+     * @param array $data
+     * @return mixed
+     */
     public function update($model, $data)
     {
         $update = isset($data['updateImage']) ? false : true;
@@ -37,6 +46,10 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         return $model;
     }
 
+    /**
+     * @param $model
+     * @return bool
+     */
     public function destroy($model)
     {
         event(new MediaWasDeleted($model->id, get_class($model)));
@@ -56,5 +69,12 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
         return $this->model->orderBy('created_at', 'DESC')->where('status', 1)->paginate($perPage);
     }
 
-
+    /**
+     * @param int $limit
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model[]|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    public function latest($limit = 6)
+    {
+        return $this->model->orderBy('created_at', 'DESC')->with(['translations', 'category'])->take($limit)->get();
+    }
 }

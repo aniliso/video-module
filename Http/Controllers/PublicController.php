@@ -23,7 +23,7 @@ class PublicController extends BasePublicController
         $this->per_page = setting('video::per_page', $this->locale, 9);
 
         Breadcrumbs::register('media.index', function ($breadcrumbs) use ($media){
-            $breadcrumbs->push(trans('themes::media.meta.title'), route('media.index'));
+            $breadcrumbs->push(trans('themes::media.meta.title'), route('video.media.index'));
         });
     }
 
@@ -38,7 +38,7 @@ class PublicController extends BasePublicController
         $this->setTitle(trans('themes::media.meta.title'))
             ->setDescription(trans('themes::media.meta.desc'));
 
-        $this->setUrl(route('media.index'))
+        $this->setUrl(route('video.media.index'))
             ->addMeta('robots', 'index, follow');
 
         return view('video::index', compact('medias'));
