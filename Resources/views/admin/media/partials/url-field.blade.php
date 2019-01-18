@@ -23,9 +23,9 @@
                     id: '{{ $media->id ?? '' }}',
                     title: '{{ $media->title ?? '' }}',
                     slug: '{{ $media->slug ?? '' }}',
-                    description: '{!! htmlspecialchars($media->description, ENT_QUOTES) ?? '' !!}',
+                    description: '{!! isset($media) ? htmlspecialchars($media->description, ENT_QUOTES) : '' !!}',
                     video_link: '{{ $media->video_link ?? '' }}',
-                    active: {{ $media->embed['code'] ? 'true' : 'false' }},
+                    active: {{ isset($media) ? $media->embed['code'] ? 'true' : 'false' : 'false' }},
                     code: '{!! $media->embed['code'] ?? '' !!}'
                 }
             },
