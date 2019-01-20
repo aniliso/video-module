@@ -4,6 +4,10 @@ use Illuminate\Routing\Router;
 /** @var Router $router */
 
 $router->group([], function (Router $router) {
+    $router->get(LaravelLocalization::transRoute('video::routes.category'), [
+        'uses' => 'PublicController@category',
+        'as'   => 'video.category'
+    ]);
     $router->get(LaravelLocalization::transRoute('video::routes.media.show'), [
        'uses' => 'PublicController@show',
        'as'   => 'video.media.show'

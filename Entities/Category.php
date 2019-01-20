@@ -19,4 +19,9 @@ class Category extends Model
     {
         return $this->hasMany(Media::class);
     }
+
+    public function getUrlAttribute()
+    {
+        return route('video.category', [$this->slug]);
+    }
 }

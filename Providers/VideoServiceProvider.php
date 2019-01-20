@@ -92,5 +92,6 @@ class VideoServiceProvider extends ServiceProvider
     public function registerWidgets()
     {
         \Widget::register('videoLatest', '\Modules\Video\Widgets\VideoWidgets@latest');
+        \Widget::register('videoCategories', '\Modules\Video\Widgets\VideoWidgets@categories');
     }
 }
