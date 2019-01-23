@@ -22,8 +22,8 @@ class PublicController extends BasePublicController
 
         $this->per_page = setting('video::per_page', $this->locale, 9);
 
-        Breadcrumbs::register('media.index', function ($breadcrumbs) use ($media){
-            $breadcrumbs->push(trans('themes::media.meta.title'), route('video.media.index'));
+        Breadcrumbs::register('video.index', function ($breadcrumbs) use ($media){
+            $breadcrumbs->push(trans('themes::video.meta.title'), route('video.media.index'));
         });
     }
 
@@ -35,8 +35,8 @@ class PublicController extends BasePublicController
     {
         $medias = $this->media->paginate($this->per_page);
 
-        $this->setTitle(trans('themes::media.meta.title'))
-            ->setDescription(trans('themes::media.meta.desc'));
+        $this->setTitle(trans('themes::video.meta.title'))
+            ->setDescription(trans('themes::video.meta.desc'));
 
         $this->setUrl(route('video.media.index'))
             ->addMeta('robots', 'index, follow');
@@ -51,14 +51,14 @@ class PublicController extends BasePublicController
         if(is_null($media)) app()->abort(404);
 
         $this->setTitle($media->title)
-             ->setDescription($media->title);
+            ->setDescription($media->title);
 
         $this->setUrl($media->url)
-             ->addMeta('robots', 'index, follow');
+            ->addMeta('robots', 'index, follow');
 
-        Breadcrumbs::register('media.show', function ($breadcrumbs) use ($media){
-           $breadcrumbs->parent('media.index');
-           $breadcrumbs->push($media->title, $media->url);
+        Breadcrumbs::register('video.show', function ($breadcrumbs) use ($media){
+            $breadcrumbs->parent('video.index');
+            $breadcrumbs->push($media->title, $media->url);
         });
 
         return view('video::show', compact('media'));
