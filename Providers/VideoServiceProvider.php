@@ -2,11 +2,15 @@
 
 namespace Modules\Video\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Traits\CanPublishConfiguration;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Traits\CanGetSidebarClassForModule;
 use Modules\Video\Events\Handlers\RegisterVideoSidebar;
+use Modules\Video\Facades\VideoFacade;
+use Modules\Video\Repositories\MediaRepository;
+use Modules\Video\Services\VideoRelation;
 
 class VideoServiceProvider extends ServiceProvider
 {
@@ -27,6 +31,9 @@ class VideoServiceProvider extends ServiceProvider
     {
         $this->registerBindings();
         $this->registerWidgets();
+        $this->registerFacades();
+
+        view()->share('videoLists', app(MediaRepository::class)->all()->pluck('title', 'id'));
 
         $this->app->extend('asgard.ModulesList', function($app) {
             array_push($app, 'video');
@@ -93,5 +100,11 @@ class VideoServiceProvider extends ServiceProvider
     {
         \Widget::register('videoLatest', '\Modules\Video\Widgets\VideoWidgets@latest');
         \Widget::register('videoCategories', '\Modules\Video\Widgets\VideoWidgets@categories');
+    }
+
+    private function registerFacades()
+    {
+        $aliasLoader = AliasLoader::getInstance();
+        $aliasLoader->alias('VideoRelation', VideoFacade::class);
     }
 }

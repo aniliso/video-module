@@ -31,4 +31,9 @@ class Media extends Model
     {
         return route('video.media.show', $this->slug);
     }
+
+    public function relation()
+    {
+        return $this->morphTo();
+    }
 }
