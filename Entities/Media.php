@@ -32,6 +32,13 @@ class Media extends Model
         return route('video.media.show', $this->slug);
     }
 
+    public function getEmbedUrlAttribute()
+    {
+        preg_match( '@src="([^"]+)"@' , $this->embed['code'], $match);
+        $src = array_pop($match);
+        return $src;
+    }
+
     public function relation()
     {
         return $this->morphTo();
