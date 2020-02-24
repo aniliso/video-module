@@ -34,7 +34,7 @@ class EloquentMediaRepository extends EloquentBaseRepository implements MediaRep
      */
     public function update($model, $data)
     {
-        $update = isset($data['updateImage']) ? false : true;
+        $update = isset($data['updateImage']) ? true : false;
 
         $model->update($data);
 
