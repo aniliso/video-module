@@ -33,7 +33,7 @@ class VideoServiceProvider extends ServiceProvider
         $this->registerWidgets();
         $this->registerFacades();
 
-        //view()->share('videoLists', app(MediaRepository::class)->all()->pluck('title', 'id'));
+        view()->share('videoLists', app(MediaRepository::class)->all()->pluck('title', 'id'));
 
         $this->app->extend('asgard.ModulesList', function($app) {
             array_push($app, 'video');

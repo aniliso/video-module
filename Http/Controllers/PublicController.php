@@ -4,6 +4,7 @@ namespace Modules\Video\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
+use Modules\Video\Repositories\CategoryRepository;
 use Modules\Video\Repositories\MediaRepository;
 use Breadcrumbs;
 
@@ -14,17 +15,24 @@ class PublicController extends BasePublicController
      */
     private $media;
     private $per_page;
+    /**
+     * @var CategoryRepository
+     */
+    private $category;
 
-    public function __construct(MediaRepository $media)
+    public function __construct(MediaRepository $media, CategoryRepository $category)
     {
         parent::__construct();
+
         $this->media = $media;
+        $this->category = $category;
 
         $this->per_page = setting('video::per_page', $this->locale, 9);
 
         Breadcrumbs::register('video.index', function ($breadcrumbs) use ($media){
             $breadcrumbs->push(trans('themes::video.meta.title'), route('video.media.index'));
         });
+
     }
 
     /**
@@ -42,6 +50,31 @@ class PublicController extends BasePublicController
             ->addMeta('robots', 'index, follow');
 
         return view('video::index', compact('medias'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function category($slug="")
+    {
+        $category = $this->category->findBySlug($slug);
+        $medias = $category->medias()->paginate($this->per_page);
+
+        $this->setTitle(trans('themes::video.meta.title'))
+            ->setDescription(trans('themes::video.meta.desc'));
+
+        $this->setUrl(route('video.media.index'))
+            ->addMeta('robots', 'index, follow');
+
+        /* Start Breadcrumbs */
+        Breadcrumbs::register('video.category', function ($breadcrumbs) use ($category) {
+            $breadcrumbs->parent('video.index');
+            $breadcrumbs->push($category->present()->meta_title, $category->url);
+        });
+        /* End Breadcrumbs */
+
+        return view('video::category', compact('category', 'medias'));
     }
 
     public function show($slug)
