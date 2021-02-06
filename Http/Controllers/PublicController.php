@@ -2,6 +2,7 @@
 
 namespace Modules\Video\Http\Controllers;
 
+//use Embed\Embed;
 use Illuminate\Http\Response;
 use Modules\Core\Http\Controllers\BasePublicController;
 use Modules\Video\Repositories\CategoryRepository;
@@ -41,6 +42,9 @@ class PublicController extends BasePublicController
      */
     public function index()
     {
+//        $embed = Embed::create('https://www.youtube.com/watch?v=BsekcY04xvQ');
+//        dd($embed->getProviders()['html']->getBag()->get('videoid'));
+
         $medias = $this->media->paginate($this->per_page);
 
         $this->setTitle(trans('themes::video.meta.title'))
@@ -91,6 +95,7 @@ class PublicController extends BasePublicController
 
         Breadcrumbs::register('video.show', function ($breadcrumbs) use ($media){
             $breadcrumbs->parent('video.index');
+            $breadcrumbs->push($media->category->title, $media->category->url);
             $breadcrumbs->push($media->title, $media->url);
         });
 

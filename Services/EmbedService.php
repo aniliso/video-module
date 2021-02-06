@@ -137,13 +137,15 @@ class EmbedService
                 $filename = $this->getImageFromSource($embed->getImage());
                 $this->model->update([
                     'embed' => [
-                        'provider'    => $embed->getProviderName(),
+                        'provider'    => strtolower($embed->getProviderName()),
                         'code'        => $embed->getCode(),
                         'source_image'=> $embed->getImage(),
                         'image'       => $filename,
                         'author'      => $embed->getAuthorName(),
                         'created_at'  => $embed->getPublishedTime(),
                         'aspectRatio' => $embed->getAspectRatio(),
+                        'shortlink'   => @$embed->getProviders()['html']->getBag()->get('shortlinkurl'),
+                        'videoid'     => @$embed->getProviders()['html']->getBag()->get('videoid')
                     ]
                 ]);
                 $this->update()->getThumb();

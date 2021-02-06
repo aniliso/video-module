@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Modules\Core\Traits\CanPublishConfiguration;
 use Modules\Core\Events\BuildingSidebar;
 use Modules\Core\Traits\CanGetSidebarClassForModule;
+use Modules\Video\Composers\VideoList;
 use Modules\Video\Events\Handlers\RegisterVideoSidebar;
 use Modules\Video\Facades\VideoFacade;
 use Modules\Video\Repositories\MediaRepository;
@@ -33,7 +34,7 @@ class VideoServiceProvider extends ServiceProvider
         $this->registerWidgets();
         $this->registerFacades();
 
-        view()->share('videoLists', app(MediaRepository::class)->all()->pluck('title', 'id'));
+        view()->composer(['page::admin.*', 'video::admin.*'], VideoList::class);
 
         $this->app->extend('asgard.ModulesList', function($app) {
             array_push($app, 'video');

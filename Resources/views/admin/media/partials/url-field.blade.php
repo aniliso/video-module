@@ -1,7 +1,7 @@
 <div class="box-body">
     <div class="input-group input-group-sm" v-bind:class="video.active ? 'has-success' : 'has-error'">
       <span class="input-group-addon">
-        <input type="checkbox" aria-label="" v-model="update">
+          <span class="margin-right:20px;">İçeril Doldur</span> <input type="checkbox" aria-label="" v-model="update" style="transform: scale(1.25)">
       </span>
         {!! Form::input('text', 'video_link', old('video', $media->video_link ?? ''), ['class'=>'form-control','v-model'=>'video.video_link']) !!}
         <span class="input-group-btn">
@@ -37,6 +37,7 @@
                             this.video.active      = true;
                             if(this.update) {
                                 $('.title').val(response.data.data.title);
+                                $('.slug').val(response.data.data.slug);
                                 $('.wysihtml5-sandbox').contents().find('body').html(response.data.data.description);
                             }
                         });
