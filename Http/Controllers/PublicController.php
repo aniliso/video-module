@@ -63,7 +63,7 @@ class PublicController extends BasePublicController
     public function category($slug="")
     {
         $category = $this->category->findBySlug($slug);
-        $medias = $category->medias()->paginate($this->per_page);
+        $medias = $category->medias()->orderBy('created_at', 'desc')->paginate($this->per_page);
 
         $this->setTitle(trans('themes::video.meta.title'))
             ->setDescription(trans('themes::video.meta.desc'));

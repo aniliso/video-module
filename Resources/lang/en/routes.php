@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'video' => [
+    'media' => [
         'show'  => 'video/{slug}',
         'index' => 'video'
     ],

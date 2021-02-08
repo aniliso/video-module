@@ -145,7 +145,7 @@ class EmbedService
                         'created_at'  => $embed->getPublishedTime(),
                         'aspectRatio' => $embed->getAspectRatio(),
                         'shortlink'   => @$embed->getProviders()['html']->getBag()->get('shortlinkurl'),
-                        'videoid'     => @$embed->getProviders()['html']->getBag()->get('videoid')
+                        'videoid'     => $embed->getProviders()['oembed']->getBag()->get('video_id') ? $embed->getProviders()['oembed']->getBag()->get('video_id') : $embed->getProviders()['html']->getBag()->get('videoid')
                     ]
                 ]);
                 $this->update()->getThumb();
